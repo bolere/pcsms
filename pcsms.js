@@ -56,40 +56,25 @@ app.get('/help',(req,res)=>{
 })
 
 
-app.get('/receive/:code/:num', (req,res)=>{
+app.get('/receive/:code/:num?', (req,res)=>{
     if(! testCode(req.params.code) ) {
         L.info("Wrong code")
         res.status(500).end("Wrong code")
         return
-    }
-    recieve_sms(req,res,req.params.num,res_json)
+    }    
+    let num = req.params.num ? req.params.num : 10    
+    recieve_sms(req,res,num,res_json)
 })
 
-app.get('/receive/:code', (req,res)=>{
-    if(! testCode(req.params.code) ) {
-        L.info("Wrong code")
-        res.status(500).end("Wrong code")
-        return
-    }
-    recieve_sms(req,res,10,res_json)
-})
 
-app.get('/receivehtml/:code', (req,res)=>{
+app.get('/receivehtml/:code/:num?', (req,res)=>{
     if(! testCode(req.params.code) ) {
         L.info("Wrong code")
         res.status(500).end("Wrong code")
         return
     }
-    recieve_sms(req,res,10,res_html)
-})
-
-app.get('/receivehtml/:code/:num', (req,res)=>{
-    if(! testCode(req.params.code) ) {
-        L.info("Wrong code")
-        res.status(500).end("Wrong code")
-        return
-    }
-    recieve_sms(req,res,req.params.num,res_html)
+    let num = req.params.num ? req.params.num : 10    
+    recieve_sms(req,res,num,res_html)
 })
 
 
