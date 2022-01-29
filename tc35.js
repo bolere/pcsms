@@ -5,6 +5,7 @@ const L = require("./log.js")
 const serialPort = require("serialport");
 let event = require("events");
 
+//L.config.traceOn = false
 
 let dataInEmitter = new event.EventEmitter()
 
@@ -225,7 +226,7 @@ async function sendSMS(reciver,text) {
         let ss = sbuf.substr(pos)
         let smsID = parseInt(ss)
 
-        L.info("SMS Send ok. ID: "+smsID)
+        L.info("SMS Send ok. ID: "+smsID+" text: " + text)
         return smsID
     }
     catch(err) {

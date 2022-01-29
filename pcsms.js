@@ -3,8 +3,6 @@
 const tc35 = require("./tc35.js")
 const L = require("./log.js")
 
-
-
 const blockList = require("./blockList.json")
 const config = require("./config.json")
 const codes = require("./codes.json")
@@ -13,6 +11,9 @@ let SMSbox = new Datastore({ filename: "./Data/SMSbox.db", autoload: true });
 
 let express = require("express")
 let app = express()
+
+L.traceOff()
+
 
 //Log all reuqests
 app.use((req,res,cont)=>{
@@ -152,7 +153,7 @@ function testCode(code) {
 app.listen(config.listenPort,config.listenIP)
 
 L.info(`Ready, listening for port ${config.listenPort} on IP ${config.listenIP}`)
-L.config.traceOn = true;
+//L.config.traceOn = true;
 
 //get_sms()
 

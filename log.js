@@ -1,22 +1,54 @@
 "use strict";
-const config = require("./log_config.json")
+//const config = require("./log_config.json")
 
-function trace(s) {
-    if( config.traceOn ) {        
+
+let traceOnFlag = true
+let infoOnFlag = true
+let errorOnFlag =true
+
+
+module.exports.trace = (s)=>{
+    if( traceOnFlag ) {        
         output( "TRA: "+s)
     }
 }
 
-function info(s) {
-    if( config.infoOn ) {        
+module.exports.traceOn = ()=>{
+    traceOnFlag = true
+}
+
+module.exports.traceOff = ()=>{
+    traceOnFlag = false
+}
+
+
+module.exports.info = (s)=>{
+    if( infoOnFlag ) {        
         output( "INF: "+s)
     }
 }
 
-function error(s) {
-    if( config.errorOn ) {        
+module.exports.infoOn = ()=>{
+    infoOnFlag = true
+}
+
+module.exports.infoOff = ()=>{
+    infoOnFlag = false
+}
+
+
+module.exports.error = (s)=>{
+    if( errorOnFlag ) {        
         output( "ERR: "+s)
     }
+}
+
+module.exports.errorOn = ()=>{
+    errorOnFlag = true
+}
+
+module.exports.errorOff = ()=>{
+    errorOnFlag = false
 }
 
 
@@ -24,9 +56,4 @@ function output(s) {
     console.log( s )
 }
 
-
-module.exports.trace = trace
-module.exports.info = info
-module.exports.error = error
-module.exports.config = config
 
