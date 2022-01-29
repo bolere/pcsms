@@ -5,7 +5,6 @@ const L = require("./log.js")
 
 
 
-
 const blockList = require("./blockList.json")
 const config = require("./config.json")
 const codes = require("./codes.json")
@@ -28,7 +27,11 @@ app.get('/', function(req,res){
 
 app.get('/help',(req,res)=>{
     let r = ""
-    
+    r+= "commands:"
+    r+= "\r\nsend/code/number/text"    
+    r+= "\r\nreceive/code[/max_num]"    
+    r+= "\r\nreceivehtml/code[/max_num]"
+    res.end(r)
 })
 
 
@@ -70,7 +73,7 @@ app.get('/receivehtml/:code/:num', (req,res)=>{
 
 
 
-app.get('/send/:code/:reciver/:text', (req,res)=>{    
+app.get('/send/:code/:reciver/:text', async (req,res)=>{    
     let code = req.params.code
     let reciver = req.params.reciver
     let text = req.params.text
@@ -105,7 +108,7 @@ app.get('/send/:code/:reciver/:text', (req,res)=>{
     }
 
     
-    tc35.sendSMS(reciver,clean_text)
+    let resid = await tc35.sendSMS(reciver,clean_text)
 
     let smsObj = tc35.makeSMSObj()
     smsObj.number = reciver    
@@ -114,7 +117,7 @@ app.get('/send/:code/:reciver/:text', (req,res)=>{
     smsObj.time = `${y}/${to2(d.getMonth()+1)}/${to2(d.getDate())},${to2(d.getHours())}:${to2(d.getMinutes())}:${to2(d.getSeconds())}`
     smsObj.text = clean_text
     smsObj.direction = "out"
-    smsObj.id = "0"
+    smsObj.id = ""+resid
     SMSbox.insert(smsObj)      
 
     res.end("OK")
@@ -192,9 +195,9 @@ function res_json(req,res,docs) {
 
 function res_html(req,res,docs) {
 
-    let h = "<table><tr><th>Time</th><th>Number</th><th>Dir</th><th>Text</th><tr>"
+    let h = "<table><tr><th>Time</th><th>Number</th><th>Dir</th><th>Id</th><th>Text</th><tr>"
     docs.forEach(d=>{
-        h += `<tr><td>${d.time}</td><td>${d.number}</td><td>${d.direction}</td><td>${d.text}</td><tr>`
+        h += `<tr><td>${d.time}</td><td>${d.number}</td><td>${d.direction}</td><td>${d.id}</td><td>${d.text}</td><tr>`
     })
     h+="</table>"
     res.set({ 'content-type': 'text/html; charset=utf-8' })

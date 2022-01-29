@@ -188,11 +188,6 @@ function parseSMS(ss) {
 }
 
 
-
-
-
-
-
 async function sendSMS(reciver,text) {
     L.trace(`Sending sms to ${reciver}: ${text}` )
     
@@ -231,6 +226,7 @@ async function sendSMS(reciver,text) {
         let smsID = parseInt(ss)
 
         L.info("SMS Send ok. ID: "+smsID)
+        return smsID
     }
     catch(err) {
         L.error(`Error sendingh SMS: ${err}`)
