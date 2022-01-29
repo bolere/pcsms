@@ -171,7 +171,7 @@ async function start_inbox() {
             }
             else L.trace(`SMS from ${s.number} included in blocklist`)
         })
-        setTimeout(getnStore, 10000)
+        setTimeout(getnStore, config.receivePollTimer)
     }
 }
 

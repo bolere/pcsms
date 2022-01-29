@@ -1,4 +1,5 @@
 {
     "listenIP" : "0.0.0.0",
-    "listenPort" : 3001
+    "listenPort" : 3001,
+    "receivePollTimer" : 10000
 }
