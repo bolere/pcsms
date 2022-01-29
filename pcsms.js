@@ -158,9 +158,6 @@ function testCode(code) {
 app.listen(config.listenPort,config.listenIP)
 
 L.info(`Ready, listening for port ${config.listenPort} on IP ${config.listenIP}`)
-//L.config.traceOn = true;
-
-//get_sms()
 
 start_inbox()
 

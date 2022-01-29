@@ -34,17 +34,12 @@ async function init() {
     L.info(`opening port ${config.port} at ${config.baud}`)
     myPort = new serialPort( config.port , config.baud )
 
-    //const parser = myPort.pipe( new ReadLine({ delimiter: '\r\n'}))
-    //parser.on('data', datain)
-
     myPort.on('open', ()=>{L.trace("Serial port open")})
     myPort.on('data', datain)
     myPort.on('close', ()=>{L.trace("Serial port close")})
     myPort.on('error', ()=>{L.trace("Serial port error")})
-
     
     try {
-        //await sendCommandAndWait("ATZ\r")
         await sendCommand("AT+CMGF=1\r")
         await waitForOk()
                 
@@ -65,11 +60,7 @@ async function init() {
         initDoneFlag = false;
         L.error("Error initializing TC35: "+err)
         throw( "Error initializing TC35: "+err )        
-    }            
-  
-    //sendSMS("22608737","Test")
-    //let SMS = await reciveSMS()
-    //let SMSlIST = await reciveAllSMS()
+    }                  
 }
 
 
@@ -242,10 +233,6 @@ async function sendSMS(reciver,text) {
 
 
 
-
-
-
-
 function datain( d ) {
     d = "" + d
     sbuf += d
@@ -261,7 +248,6 @@ function datain( d ) {
             os +=  " "
         }
         os += ")"
-        //L.trace(os)    
     }
 }
 
