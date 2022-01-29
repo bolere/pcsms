@@ -14,7 +14,7 @@ let app = express()
 
 let firewall = require("./firewall.json")
 
-//L.traceOff()
+L.traceOff()
 
 
 //Log all reuqests
@@ -62,7 +62,7 @@ app.get('/receive/:code/:num', (req,res)=>{
         res.status(500).end("Wrong code")
         return
     }
-    recieve_sms(req,res,num,res_json)
+    recieve_sms(req,res,req.params.num,res_json)
 })
 
 app.get('/receive/:code', (req,res)=>{
@@ -89,7 +89,7 @@ app.get('/receivehtml/:code/:num', (req,res)=>{
         res.status(500).end("Wrong code")
         return
     }
-    recieve_sms(req,res,num,res_html)
+    recieve_sms(req,res,req.params.num,res_html)
 })
 
 

@@ -224,7 +224,13 @@ async function sendSMS(reciver,text) {
 
         let pos = sbuf.indexOf("\r\n+CMGS: ")+"\r\n+CMGS: ".length
         let ss = sbuf.substr(pos)
-        let smsID = parseInt(ss)
+        let yy =""
+        for(let i=0;i<ss.length;i++) {  
+            if(ss.charAt(i) < "0" ) break;  
+            if(ss.charAt(i) > '9' ) break;  
+            yy+=ss.charAt(i); 
+        }
+        let smsID = parseInt(yy)
 
         L.info("SMS Send ok. ID: "+smsID+" text: " + text)
         return smsID
