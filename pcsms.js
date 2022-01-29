@@ -12,14 +12,34 @@ let SMSbox = new Datastore({ filename: "./Data/SMSbox.db", autoload: true });
 let express = require("express")
 let app = express()
 
-L.traceOff()
+let firewall = require("./firewall.json")
+
+//L.traceOff()
 
 
 //Log all reuqests
-app.use((req,res,cont)=>{
-    L.trace(req.method+" request from: "+req.connection.remoteAddress+" for \""+req.originalUrl+"\"")
+app.use((req,res,cont)=>{    
+    L.trace(req.method+" request from: "+req.socket.remoteAddress+" for \""+req.originalUrl+"\"")
     cont()
  })
+
+ //Firewall
+app.use((req,res,cont)=>{
+    if( firewall.enabled) {
+        let ip = req.socket.remoteAddress
+        if( ! firewall.allowedIps.find( (fi)=>{
+            if( fi === ip) return true
+            return false
+        }) ) {
+            L.error("FIREWALL BLOCK ADDRESS: "+ip)
+            req.socket.end()
+            return;
+        }
+    }
+    cont()
+})
+
+
 
 /*  SEND TEXT AS ROOT */
 app.get('/', function(req,res){
