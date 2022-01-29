@@ -1,0 +1,18 @@
+{
+  "name": "pcsmsnode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pcsms.js",
+  "dependencies": {
+    "express": "^4.17.2",
+    "nedb": "^1.8.0",
+    "serialport": "^9.2.8",
+    "underscore": "^1.13.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
